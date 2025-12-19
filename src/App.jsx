@@ -1,11 +1,11 @@
 import { Routes, Route } from 'react-router-dom';
 import MainLayout from './layouts/MainLayout';
 import Home from './pages/home/Home';
+import Login from './pages/auth/Login';
 import NotFound from './pages/NotFound';
 import { PATHS } from './routes/paths';
 
 // Placeholder components for routes that don't exist yet
-const Login = () => <div className="p-10 text-center">Login Page (Coming Soon)</div>;
 const Register = () => <div className="p-10 text-center">Register Page (Coming Soon)</div>;
 const AllLessons = () => <div className="p-10 text-center">All Lessons Page (Coming Soon)</div>;
 
