@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { auth } from './firebase';
 
 const api = axios.create({
     baseURL: import.meta.env.VITE_API_URL,
@@ -7,12 +8,12 @@ const api = axios.create({
 
 // Request interceptor to add auth token
 api.interceptors.request.use(
-    (config) => {
+    async (config) => {
         // We will update this later when we implement Firebase Auth
-        // const token = await auth.currentUser?.getIdToken();
-        // if (token) {
-        //   config.headers.Authorization = `Bearer ${token}`;
-        // }
+        const token = await auth.currentUser?.getIdToken();
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
         return config;
     },
     (error) => {
