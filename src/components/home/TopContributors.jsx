@@ -8,11 +8,10 @@ const TopContributors = () => {
     useEffect(() => {
         const fetchContributors = async () => {
             try {
-                const { data } = await api.get('/users');
-                // Provide a fallback if data is wrapped or direct array
-                const users = Array.isArray(data) ? data : (data.data || []);
-                // Just mocking "top" by slicing first 4 for now
-                setContributors(users.slice(0, 4));
+                // Correct endpoint: /public/analytics (BaseURL is /api)
+                const { data } = await api.get('/public/analytics');
+                const topUsers = data.topContributors || [];
+                setContributors(topUsers);
             } catch (error) {
                 console.error('Failed to fetch contributors:', error);
             }
@@ -34,32 +33,38 @@ const TopContributors = () => {
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {contributors.map((user, index) => (
-                        <div
-                            key={user._id || user.id}
-                            className="group relative bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 text-center"
-                        >
-                            <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <Award className="text-yellow-500 w-6 h-6" />
-                            </div>
+                    {contributors.map((item, index) => {
+                        const user = item.author;
+                        // Fallback for missing user data
+                        if (!user) return null;
 
-                            <div className="relative inline-block mb-4">
-                                <div className="absolute inset-0 bg-blue-100 rounded-full transform scale-110 group-hover:scale-125 transition-transform duration-300"></div>
-                                <img
-                                    src={user.image || `https://ui-avatars.com/api/?name=${user.name}&background=random`}
-                                    alt={user.name}
-                                    className="relative w-24 h-24 rounded-full object-cover border-4 border-white shadow-sm"
-                                />
-                            </div>
+                        return (
+                            <div
+                                key={item._id || index}
+                                className="group relative bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 text-center"
+                            >
+                                <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <Award className="text-yellow-500 w-6 h-6" />
+                                </div>
 
-                            <h3 className="text-lg font-bold text-gray-900 mb-1">
-                                {user.name || 'Anonymous'}
-                            </h3>
-                            <p className="text-sm text-blue-600 font-medium mb-3">
-                                Total Contributions: {user.lessonCount || Math.floor(Math.random() * 20) + 1}
-                            </p>
-                        </div>
-                    ))}
+                                <div className="relative inline-block mb-4">
+                                    <div className="absolute inset-0 bg-blue-100 rounded-full transform scale-110 group-hover:scale-125 transition-transform duration-300"></div>
+                                    <img
+                                        src={user.photo || `https://ui-avatars.com/api/?name=${user.name}&background=random`}
+                                        alt={user.name}
+                                        className="relative w-24 h-24 rounded-full object-cover border-4 border-white shadow-sm"
+                                    />
+                                </div>
+
+                                <h3 className="text-lg font-bold text-gray-900 mb-1">
+                                    {user.name || 'Anonymous'}
+                                </h3>
+                                <p className="text-sm text-blue-600 font-medium mb-3">
+                                    Total Contributions: {item.count || 0}
+                                </p>
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
         </section>

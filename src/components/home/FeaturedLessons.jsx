@@ -14,7 +14,9 @@ const FeaturedLessons = () => {
                 // Assuming GET /lessons returns { data: [...] } or [...]
                 const { data } = await api.get('/lessons');
                 // Provide a fallback if data is wrapped or direct array
-                const lessonsData = Array.isArray(data) ? data : (data.data || []);
+                const lessonsData = Array.isArray(data)
+                    ? data
+                    : (data.lessons || data.data || []);
                 setLessons(lessonsData.slice(0, 6)); // Display top 6
             } catch (error) {
                 console.error('Failed to fetch featured lessons:', error);
