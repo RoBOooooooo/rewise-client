@@ -4,6 +4,7 @@ import Home from './pages/home/Home';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import AllLessons from './pages/lessons/AllLessons';
+import LessonDetails from './pages/lessons/LessonDetails';
 import NotFound from './pages/NotFound';
 import PrivateRoute from './routes/PrivateRoute';
 import { PATHS } from './routes/paths';
@@ -21,6 +22,7 @@ function App() {
         <Route path={PATHS.LOGIN} element={<Login />} />
         <Route path={PATHS.REGISTER} element={<Register />} />
         <Route path={PATHS.ALL_LESSONS} element={<AllLessons />} />
+        <Route path={PATHS.LESSON_DETAILS} element={<LessonDetails />} />
 
         {/* Protected User Routes */}
         <Route
