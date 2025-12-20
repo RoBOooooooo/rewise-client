@@ -3,12 +3,12 @@ import MainLayout from './layouts/MainLayout';
 import Home from './pages/home/Home';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
+import AllLessons from './pages/lessons/AllLessons';
 import NotFound from './pages/NotFound';
 import PrivateRoute from './routes/PrivateRoute';
 import { PATHS } from './routes/paths';
 
 // Placeholder components for routes that don't exist yet
-const AllLessons = () => <div className="p-10 text-center">All Lessons Page (Coming Soon)</div>;
 const Dashboard = () => <div className="p-10 text-center">User Dashboard (Protected)</div>;
 const AdminDashboard = () => <div className="p-10 text-center">Admin Dashboard (Protected & Admin Only)</div>;
 
