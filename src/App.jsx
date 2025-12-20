@@ -1,4 +1,3 @@
-```javascript
 import { Routes, Route } from 'react-router-dom';
 import MainLayout from './layouts/MainLayout';
 import Home from './pages/home/Home';
@@ -22,27 +21,27 @@ function App() {
         <Route path={PATHS.LOGIN} element={<Login />} />
         <Route path={PATHS.REGISTER} element={<Register />} />
         <Route path={PATHS.ALL_LESSONS} element={<AllLessons />} />
-        
+
         {/* Protected User Routes */}
-        <Route 
-          path={PATHS.DASHBOARD.ROOT} 
+        <Route
+          path={PATHS.DASHBOARD.ROOT}
           element={
             <PrivateRoute>
               <Dashboard />
             </PrivateRoute>
-          } 
+          }
         />
 
         {/* Protected Admin Routes */}
-        <Route 
-          path={PATHS.ADMIN.ROOT} 
+        <Route
+          path={PATHS.ADMIN.ROOT}
           element={
             <PrivateRoute allowedRoles={['admin']}>
               <AdminDashboard />
             </PrivateRoute>
-          } 
+          }
         />
-        
+
         {/* 404 Route */}
         <Route path="*" element={<NotFound />} />
       </Route>
