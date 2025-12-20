@@ -1,9 +1,13 @@
 import HeroSlider from '../../components/home/HeroSlider';
+import WhyLearn from '../../components/home/WhyLearn';
+import Stats from '../../components/home/Stats';
 
 const Home = () => {
     return (
         <div className="min-h-screen">
             <HeroSlider />
+            <WhyLearn />
+            <Stats />
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 {/* Other sections will go here */}
