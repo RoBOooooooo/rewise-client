@@ -1,7 +1,16 @@
+import HeroSlider from '../../components/home/HeroSlider';
+
 const Home = () => {
     return (
-        <div className="flex items-center justify-center min-h-[50vh]">
-            <h1 className="text-3xl font-bold text-gray-800">Home Page (Coming Soon)</h1>
+        <div className="min-h-screen">
+            <HeroSlider />
+
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                {/* Other sections will go here */}
+                <div className="text-center text-gray-500 py-12">
+                    More content incoming...
+                </div>
+            </div>
         </div>
     );
 };
