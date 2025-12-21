@@ -2,14 +2,20 @@ import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { auth, googleProvider } from '../../services/firebase';
+import { syncUserWithBackend } from '../../services/api';
 import { PATHS } from '../../routes/paths';
 import { Mail, Lock, LogIn } from 'lucide-react';
 import toast from 'react-hot-toast';
+import useAuth from '../../hooks/useAuth';
+import SEO from '../../components/common/SEO';
 
 const Login = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const from = location.state?.from?.pathname || PATHS.DASHBOARD.ROOT; // Default redirect after login
+    const { refreshUser } = useAuth();
+
+    // Strict Redirect Logic: Prioritize "from" state, else default to Dashboard
+    const from = location.state?.from?.pathname || PATHS.DASHBOARD.ROOT;
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -19,7 +25,12 @@ const Login = () => {
         e.preventDefault();
         setLoading(true);
         try {
+            // 1. Firebase Login
             await signInWithEmailAndPassword(auth, email, password);
+
+            // 2. Refresh Auth Context to pull latest DB data
+            await refreshUser();
+
             toast.success('Welcome back!');
             navigate(from, { replace: true });
         } catch (error) {
@@ -35,17 +46,25 @@ const Login = () => {
 
     const handleGoogleLogin = async () => {
         try {
-            await signInWithPopup(auth, googleProvider);
+            // 1. Firebase Google Popup
+            const result = await signInWithPopup(auth, googleProvider);
+            const user = result.user;
+
+            // 2. API Sync (Required for Google Login to create/update user in DB)
+            await syncUserWithBackend(user);
+            await refreshUser();
+
             toast.success('Logged in with Google!');
             navigate(from, { replace: true });
         } catch (error) {
-            console.error(error);
-            toast.error('Google login failed');
+            console.error('Google Login Error:', error);
+            toast.error('Google login failed. Please try again.');
         }
     };
 
     return (
         <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
+            <SEO title="Login" description="Login to your Rewise account to continue your learning journey." />
             <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
                 <div className="text-center mb-8">
                     <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h1>
@@ -120,12 +139,17 @@ const Login = () => {
                     </button>
                 </div>
 
-                <p className="mt-8 text-center text-sm text-gray-600">
-                    Don't have an account?{' '}
-                    <Link to={PATHS.REGISTER} className="font-semibold text-blue-600 hover:text-blue-500">
-                        Create account
-                    </Link>
-                </p>
+                <div className="text-center mt-8 space-y-2">
+                    <p className="text-sm text-gray-600">
+                        Don't have an account?{' '}
+                        <Link to={PATHS.REGISTER} className="font-semibold text-blue-600 hover:text-blue-500">
+                            Create account
+                        </Link>
+                    </p>
+                    <p className="text-xs text-gray-400">
+                        {location.state?.from ? 'We will redirect you back to your previous page.' : ''}
+                    </p>
+                </div>
             </div>
         </div>
     );

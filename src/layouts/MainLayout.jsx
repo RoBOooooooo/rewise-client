@@ -5,13 +5,12 @@ import { Toaster } from 'react-hot-toast';
 
 const MainLayout = () => {
     return (
-        <div className="min-h-screen flex flex-col bg-white font-sans text-gray-900">
+        <div className="min-h-screen flex flex-col bg-white dark:bg-gray-950 font-sans text-gray-900 dark:text-gray-100 transition-colors duration-300">
             <Navbar />
             <main className="flex-grow">
                 <Outlet />
             </main>
             <Footer />
-            <Toaster position="top-center" />
         </div>
     );
 };

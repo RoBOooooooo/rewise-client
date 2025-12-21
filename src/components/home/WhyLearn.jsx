@@ -38,7 +38,7 @@ const WhyLearn = () => {
                     {features.map((feature, index) => (
                         <div
                             key={index}
-                            className="p-8 rounded-2xl bg-gray-50 border border-gray-100 hover:shadow-xl hover:bg-white transition-all duration-300 group"
+                            className="p-8 rounded-2xl bg-gray-50 border border-gray-200 hover:shadow-xl hover:bg-white transition-all duration-300 group"
                         >
                             <div className="mb-6 bg-blue-100 w-16 h-16 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
                                 {feature.icon}

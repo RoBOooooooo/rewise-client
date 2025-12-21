@@ -15,17 +15,10 @@ const PrivateRoute = ({ children, allowedRoles }) => {
     }
 
     if (!user) {
-        // Redirect them to the /login page, but save the current location they were
-        // trying to go to within the state prop, so we can send them back there 
-        // after they login.
         return <Navigate to={PATHS.LOGIN} state={{ from: location }} replace />;
     }
 
-    // If roles are defined and user doesn't have the required role
     if (allowedRoles && !allowedRoles.includes(user.role)) {
-        // Determine where to send unauthorized users
-        // If they are logged in but just don't have permission (e.g. user trying to access admin)
-        // Send to home or a specific unauthorized page
         return <Navigate to={PATHS.HOME} replace />;
     }
 

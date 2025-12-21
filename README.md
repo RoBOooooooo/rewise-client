@@ -1,16 +1,72 @@
-# React + Vite
+# Rewise - Client Side
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Rewise** is a modern, feature-rich web application designed for sharing and discovering life lessons. Built with the latest web technologies, it offers a seamless experience for users to connect, learn, and grow.
 
-Currently, two official plugins are available:
+## 🚀 Live Demo
+**[Visit Live Website](https://rewise-arif.vercel.app)**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Key Features
+*   **🔐 Secure Authentication**: Firebase-powered Login and Registration with Google Sign-in support.
+*   **🎨 Modern UI/UX**: Built with Tailwind CSS v4, featuring a global **Dark/Light Mode** toggle.
+*   **📱 Responsive Dashboard**: Comprehensive User and Admin dashboards for managing content.
+*   **📚 Lesson Management**: Create, edit, and manage lessons with rich text and cover images.
+*   **📤 Social Sharing & PDF**: Share lessons to Facebook, X, LinkedIn, or download as a beautifully formatted PDF.
+*   **🔍 Advanced Search**: Filter lessons by category, perform keyword searches, and sort by popularity/date.
+*   **⚡ Optimization**: Client-side pagination and optimized assets for fast performance.
+*   **✨ Interactive Elements**: Lottie animations for engagement and toast notifications for feedback.
 
-## React Compiler
+## 🛠️ Tech Stack
+*   **Framework**: [React 19](https://react.dev/) + [Vite](https://vitejs.dev/)
+*   **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+*   **Icons**: [Lucide React](https://lucide.dev/)
+*   **Authentication**: [Firebase Auth](https://firebase.google.com/)
+*   **State Management**: React Context API
+*   **HTTP Client**: Axios
+*   **Additional Libs**:
+    *   `react-router-dom` (Routing)
+    *   `@react-pdf/renderer` (PDF Export)
+    *   `lottie-react` (Animations)
+    *   `react-hot-toast` (Notifications)
+    *   `recharts` (Data Visualization)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 📦 Installation & Setup
 
-## Expanding the ESLint configuration
+1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/your-username/rewise-client.git
+    cd rewise-client
+    ```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+2.  **Install Dependencies**
+    ```bash
+    npm install --legacy-peer-deps
+    ```
+    *> Note: Use `--legacy-peer-deps` to resolve React 19 peer dependency conflicts.*
+
+3.  **Environment Configuration**
+    Create a `.env` file in the root directory:
+    ```env
+    VITE_apiKey=your_firebase_api_key
+    VITE_authDomain=your_firebase_auth_domain
+    VITE_projectId=your_firebase_project_id
+    VITE_storageBucket=your_firebase_storage_bucket
+    VITE_messagingSenderId=your_firebase_sender_id
+    VITE_appId=your_firebase_app_id
+    VITE_IMGBB_API_KEY=your_imgbb_api_key
+    ```
+
+4.  **Run Development Server**
+    ```bash
+    npm run dev
+    ```
+
+5.  **Build for Production**
+    ```bash
+    npm run build
+    ```
+
+## 📜 License
+This project is open-source and available under the [MIT License](LICENSE).
+
+---
+*Developed by Mujahidul Islam Arif*

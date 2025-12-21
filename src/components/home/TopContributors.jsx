@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import api from '../../services/api';
-import { Award } from 'lucide-react';
+import { Award, Loader2 } from 'lucide-react';
 
 const TopContributors = () => {
+    const [loading, setLoading] = useState(true);
     const [contributors, setContributors] = useState([]);
 
     useEffect(() => {
@@ -14,11 +15,21 @@ const TopContributors = () => {
                 setContributors(topUsers);
             } catch (error) {
                 console.error('Failed to fetch contributors:', error);
+            } finally {
+                setLoading(false);
             }
         };
 
         fetchContributors();
     }, []);
+
+    if (loading) {
+        return (
+            <div className="py-20 flex justify-center">
+                <Loader2 className="animate-spin text-blue-600" size={32} />
+            </div>
+        );
+    }
 
     if (contributors.length === 0) return null;
 

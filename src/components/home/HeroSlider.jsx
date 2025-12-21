@@ -6,15 +6,17 @@ import { PATHS } from '../../routes/paths';
 const slides = [
     {
         id: 1,
-        image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=2574&auto=format&fit=crop',
+        // Writing/Notebook - implying revision/creation
+        image: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=2573&auto=format&fit=crop',
         title: 'Share Your Life Lessons',
         description: 'Turn your experiences into wisdom. Create, share, and inspire others with your stories.',
         cta: 'Start Writing',
-        link: PATHS.DASHBOARD.ADD_LESSON,
+        link: `${PATHS.DASHBOARD.ROOT}/${PATHS.DASHBOARD.ADD_LESSON}`,
     },
     {
         id: 2,
-        image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2670&auto=format&fit=crop',
+        // Library/Books - implying knowledge/browse
+        image: 'https://images.unsplash.com/photo-1616400619175-5beda3a17896?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         title: 'Discover Global Wisdom',
         description: 'Explore a vast library of life lessons from people around the world. Learn from their journeys.',
         cta: 'Explore Lessons',
@@ -22,6 +24,7 @@ const slides = [
     },
     {
         id: 3,
+        // Group study - community
         image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2671&auto=format&fit=crop',
         title: 'Join a Community of Learners',
         description: 'Connect, comment, and grow with a community that values deep learning and personal growth.',
@@ -55,8 +58,8 @@ const HeroSlider = () => {
                     <img
                         src={slide.image}
                         alt={slide.title}
-                        className="w-full h-full object-cover transform scale-105 transition-transform duration-[10000ms] ease-linear"
-                        style={{ transform: index === current ? 'scale(100)' : 'scale(105)' }} // Simple generic zoom effect attempt, slightly buggy with just inline style, keeping standard object-cover.
+                        className="w-full h-full object-cover transform transition-transform duration-[10000ms] ease-linear"
+                        style={{ transform: index === current ? 'scale(1)' : 'scale(1.05)' }}
                     />
 
                     {/* Content */}

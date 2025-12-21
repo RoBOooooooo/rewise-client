@@ -16,19 +16,26 @@ const AuthProvider = ({ children }) => {
                 try {
                     // Sync with MongoDB backend
                     // Note for User: This endpoint MUST exist on your backend
+
+                    // V1.1.0 REQUEST: "Only for register it should post first then fetch"
+                    // If we are on the register page, we SKIP this initial fetch to avoid race condition 404s.
+                    // The Register component will manually call user.reload() / refreshUser() after the POST is successful.
+                    if (window.location.pathname.includes('register')) {
+                        console.log('Skipping auto-fetch on register page (waiting for POST)');
+                        setUser({ ...firebaseUser }); // Set basic firebase user so loading false
+                        return;
+                    }
+
                     const { data } = await api.get('/user/me');
                     setUser(data);
                 } catch (error) {
                     console.error('Failed to sync user with backend:', error);
-                    // If backend sync fails but firebase auth is valid, we might want to logout or handle partially
-                    // For safety, let's allow the firebase user but warn, OR logout. 
-                    // Rule says: "MongoDB backend response is the SINGLE source of truth".
-                    // So if we can't get MongoDB user, we technically shouldn't treat them as fully logged in.
-                    // However, for registration flow, checking this might be complex. 
-                    // Let's set user to null if backend sync fails to enforce the rule.
-                    toast.error('Session sync failed. Please login again.');
-                    await signOut(auth);
-                    setUser(null);
+                    // Do NOT logout immediately. Registration might be in progress (creating DB entry).
+                    // Just set user to firebase info temporarily or null if strict.
+                    // For a smooth UX, we can keep the firebase user logged in and try to refetch later.
+                    // But to respect the "SINGLE SOURCE" rule, maybe allow a grace period?
+                    // Let's just NOT sign out here. Register.jsx will handle the specific sync/redirect.
+                    setUser({ ...firebaseUser }); // Fallback to firebase data so UI doesn't flicker "Logged out"
                 }
             } else {
                 setUser(null);

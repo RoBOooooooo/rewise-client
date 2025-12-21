@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo } from 'react';
 import api from '../../services/api';
 import LessonCard from '../../components/common/LessonCard';
 import { Loader2, Search, Filter, SlidersHorizontal, ChevronLeft, ChevronRight } from 'lucide-react';
+import SEO from '../../components/common/SEO';
 
 const CATEGORIES = ['All', 'Personal Growth', 'Mindset', 'Relationships', 'Career', 'Health', 'Finance'];
 
@@ -16,7 +17,7 @@ const AllLessons = () => {
 
     // Pagination State
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 9;
+    const itemsPerPage = 6;
 
     useEffect(() => {
         const fetchLessons = async () => {
@@ -76,9 +77,15 @@ const AllLessons = () => {
         setCurrentPage(1);
     }, [searchQuery, selectedCategory, sortBy]);
 
+    // Scroll to top when page changes
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, [currentPage]);
+
     return (
         <div className="min-h-screen bg-gray-50 py-12">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <SEO title="All Lessons" description="Browse thousands of life lessons from our community." />
 
                 {/* Header & Controls */}
                 <div className="flex flex-col gap-8 mb-10">
@@ -149,23 +156,49 @@ const AllLessons = () => {
 
                         {/* Pagination Controls */}
                         {totalPages > 1 && (
-                            <div className="flex justify-center items-center gap-4">
+                            <div className="flex justify-center items-center gap-2 mt-12 mb-8">
                                 <button
                                     onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                                     disabled={currentPage === 1}
-                                    className="p-2 border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                    className="p-2 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-gray-700 dark:text-gray-300"
                                 >
                                     <ChevronLeft size={20} />
                                 </button>
 
-                                <span className="text-gray-600 font-medium">
-                                    Page {currentPage} of {totalPages}
-                                </span>
+                                {/* Page Numbers */}
+                                <div className="flex gap-2">
+                                    {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                                        // Logic to show generic page window around current page
+                                        let pageNum = currentPage;
+                                        if (totalPages <= 5) {
+                                            pageNum = i + 1;
+                                        } else if (currentPage <= 3) {
+                                            pageNum = i + 1;
+                                        } else if (currentPage >= totalPages - 2) {
+                                            pageNum = totalPages - 4 + i;
+                                        } else {
+                                            pageNum = currentPage - 2 + i;
+                                        }
+
+                                        return (
+                                            <button
+                                                key={pageNum}
+                                                onClick={() => setCurrentPage(pageNum)}
+                                                className={`w-10 h-10 rounded-lg font-medium transition-colors ${currentPage === pageNum
+                                                    ? 'bg-blue-600 text-white'
+                                                    : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'
+                                                    }`}
+                                            >
+                                                {pageNum}
+                                            </button>
+                                        );
+                                    })}
+                                </div>
 
                                 <button
                                     onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                                     disabled={currentPage === totalPages}
-                                    className="p-2 border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                    className="p-2 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-gray-700 dark:text-gray-300"
                                 >
                                     <ChevronRight size={20} />
                                 </button>

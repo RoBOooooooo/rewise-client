@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import { Facebook, Twitter, Instagram, Linkedin, Rocket, Mail, Phone, MapPin } from 'lucide-react';
+import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
+import rewiseLogo from '../../assets/logo.png';
 
 const Footer = () => {
     return (
@@ -10,8 +11,8 @@ const Footer = () => {
                     {/* Brand Column */}
                     <div className="space-y-4">
                         <div className="flex items-center gap-2 group">
-                            <div className="bg-blue-600 p-2 rounded-xl text-white">
-                                <Rocket size={20} />
+                            <div className="bg-blue-600 rounded-xl text-white">
+                                <img src={rewiseLogo} alt="Rewise logo" className='w-8 h-8' />
                             </div>
                             <span className="text-xl font-bold bg-gradient-to-r from-blue-700 to-blue-500 bg-clip-text text-transparent">
                                 Rewise
@@ -43,11 +44,11 @@ const Footer = () => {
                             </li>
                             <li className="flex items-center gap-3 text-sm text-gray-500">
                                 <Phone size={16} className="text-blue-600" />
-                                <span>+1 (555) 123-4567</span>
+                                <span>+880 1721 602071</span>
                             </li>
                             <li className="flex items-center gap-3 text-sm text-gray-500">
                                 <MapPin size={16} className="text-blue-600" />
-                                <span>123 Wisdom St, Tech City</span>
+                                <span>Shamimabad, Sylhet, Bangladesh</span>
                             </li>
                         </ul>
                     </div>
